@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bautizo Lucio Aaron</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #8d6e63;
+            --text-dark: #2c1e1a;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%; overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000;
+        }
+
+        .custom-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('https://i.postimg.cc/vBVDq6RK/1777510224486.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .slide-wrapper {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1);
+        }
+
+        .is-open { transform: translateY(-100vh); }
+
+        .page { height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; }
+        
+        #bird-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 5;
+        }
+
+        .bird-particle {
+            position: absolute; width: 45px; pointer-events: none; opacity: 0;
+            animation: flyContinuous 8s linear forwards;
+        }
+
+        @keyframes flyContinuous {
+            0% { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.5; }
+            85% { opacity: 0.5; }
+            100% { transform: translate(var(--move-x), var(--move-y)) scale(1.2) rotate(15deg); opacity: 0; }
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(8px);
+            padding: 40px 24px;
+            border-radius: 30px;
+            width: 92%;
+            max-width: 450px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .btn-main {
+            background: var(--accent);
+            color: white;
+            padding: 14px 25px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(141, 110, 99, 0.4);
+            text-align: center;
+        }
+
+        .music-btn {
+            position: fixed; bottom: 25px; right: 25px;
+            width: 44px; height: 44px; background: white;
+            border-radius: 50%; display: flex; justify-content: center;
+            align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 1000; cursor: pointer;
+        }
+
+        .playing { animation: spin 4s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .font-cursive { font-family: 'Alex Brush', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        .text-detail-shadow {
+            text-shadow: 0px 1px 2px rgba(255,255,255,0.8);
+        }
+
+        .countdown-item { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
+        .countdown-val { font-size: 1.5rem; font-weight: 700; color: var(--text-dark); }
+        .countdown-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .heavy-shadow {
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="custom-bg">
+
+    <div id="bird-container"></div>
+
+    <audio id="bgAudio" loop preload="auto">
+        <source src="https://files.catbox.moe/ah2qkq.m4a" type="audio/mp4">
+    </audio>
+
+    <div class="music-btn" onclick="togglePlay()" id="mContainer">
+        <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+    </div>
+
+    <div class="slide-wrapper" id="slider">
+        
+        <section class="page justify-center text-center">
+            <div class="relative z-10 px-4">
+                <p class="uppercase tracking-[0.4em] text-white/95 text-[10px] mb-4 heavy-shadow">Te invitamos con amor al</p>
+                <h1 class="font-serif text-6xl uppercase tracking-tighter text-white heavy-shadow">Bautizo</h1>
+                <p class="font-cursive text-4xl text-white/95 my-2 heavy-shadow">y</p>
+                <h1 class="font-serif text-6xl uppercase tracking-tighter text-white heavy-shadow">Primer Año</h1>
+                <p class="font-cursive text-7xl text-[#f3ece5] mt-6 heavy-shadow">Lucio Aaron</p>
+                
+                <button class="mt-12 px-10 py-4 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full uppercase tracking-[4px] text-[10px] font-bold" onclick="openInv()">
+                    Tocar para abrir
+                </button>
+            </div>
+        </section>
+
+        <section class="page details-view overflow-y-auto">
+            <div class="content-card text-center mb-10 reveal">
+                
+                <h2 class="font-serif text-3xl font-bold uppercase text-gray-800 text-detail-shadow">Faltan solo...</h2>
+                
+                <div class="flex justify-center gap-4 my-6 py-4 border-y border-black/10">
+                    <div class="countdown-item"><span class="countdown-val" id="days">00</span><span class="countdown-label">Días</span></div>
+                    <div class="countdown-item"><span class="countdown-val" id="hours">00</span><span class="countdown-label">Hrs</span></div>
+                    <div class="countdown-item"><span class="countdown-val" id="minutes">00</span><span class="countdown-label">Min</span></div>
+                </div>
+
+                <h3 class="font-cursive text-7xl text-black my-4 text-detail-shadow">Lucio Aaron</h3>
+                <p class="font-serif text-2xl font-bold text-gray-700 text-detail-shadow">Sábado, 13 de Junio</p>
+
+                <div class="space-y-12 mt-12 px-2 text-[#3e2723]">
+                    <div class="reveal">
+                        <p class="text-xs uppercase tracking-widest text-[#8d6e63] font-bold mb-2">Misa</p>
+                        <p class="text-lg font-semibold leading-tight text-detail-shadow">Parroquia del Sr. de Mazatepec</p>
+                        <p class="font-serif text-3xl font-bold mt-1 text-detail-shadow">01:00 pm</p>
+                        <a href="https://maps.app.goo.gl/3bKmn88i9Ak7iR3M6" target="_blank" class="text-[10px] font-bold underline uppercase tracking-[2px] mt-2 block text-[#8d6e63]">Abrir ubicación de la Iglesia</a>
+                    </div>
+
+                    <div class="reveal">
+                        <p class="text-xs uppercase tracking-widest text-[#8d6e63] font-bold mb-2">Recepción</p>
+                        <p class="text-lg font-semibold leading-tight text-detail-shadow">Salón Diamante</p>
+                        <p class="font-serif text-3xl font-bold mt-1 text-detail-shadow">03:00 pm</p>
+                        <a href="https://maps.app.goo.gl/83B9ckuwoAEStpN66" target="_blank" class="text-[10px] font-bold underline uppercase tracking-[2px] mt-2 block text-[#8d6e63]">Abrir ubicación del Salón</a>
+                    </div>
+
+                    <div class="pt-8 reveal">
+                        <a href="https://wa.me/525617622271?text=Hola!%20Confirmo%20asistencia%20al%20Bautizo%20de%20Lucio%20Aaron.%20Seremos:%20" class="btn-main w-full">
+                            Confirmar Asistencia
+                        </a>
+                        
+                        <a id="addToCalendar" class="block text-[10px] uppercase tracking-widest mt-6 opacity-80 font-bold text-gray-800 underline cursor-pointer">
+                            + Guardar fecha en mi calendario
+                        </a>
+                    </div>
+                </div>
+
+                <button class="mt-20 text-gray-500 text-[10px] uppercase tracking-widest" onclick="closeInv()">↑ Volver a portada</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const audio = document.getElementById('bgAudio');
+        const mContainer = document.getElementById('mContainer');
+        const birdContainer = document.getElementById('bird-container');
+        let isPlaying = false;
+
+        document.getElementById('addToCalendar').onclick = function() {
+            const title = "Bautizo y 1er Año de Lucio Aaron";
+            const details = "Acompáñanos a celebrar este gran día.";
+            const location = "Parroquia del Sr. de Mazatepec / Salón Diamante";
+            const startDate = "20260613T130000Z";
+            const endDate = "20260613T230000Z";
+            const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}&dates=${startDate}/${endDate}`;
+            window.open(url, '_blank');
+        };
+
+        const targetDate = new Date("June 13, 2026 13:00:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const gap = targetDate - now;
+            const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+            const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('days').innerText = d < 10 ? '0'+d : (d < 0 ? '00' : d);
+            document.getElementById('hours').innerText = h < 10 ? '0'+h : (h < 0 ? '00' : h);
+            document.getElementById('minutes').innerText = m < 10 ? '0'+m : (m < 0 ? '00' : m);
+        }
+        setInterval(updateCountdown, 1000);
+
+        window.onload = () => { 
+            setInterval(spawnBird, 800); 
+            updateCountdown(); 
+        };
+
+        function openInv() {
+            slider.classList.add('is-open');
+            if(!isPlaying) playMusic();
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+            }, 800);
+        }
+
+        function closeInv() { slider.classList.remove('is-open'); }
+
+        function playMusic() {
+            audio.play().then(() => {
+                isPlaying = true;
+                mContainer.classList.add('playing');
+            }).catch(() => {});
+        }
+
+        function togglePlay() {
+            if (audio.paused) { playMusic(); }
+            else { audio.pause(); isPlaying = false; mContainer.classList.remove('playing'); }
+        }
+
+        function spawnBird() {
+            const bird = document.createElement('img');
+            bird.src = 'https://i.postimg.cc/P5pyM230/1777509156113.png';
+            bird.className = 'bird-particle';
+            const side = Math.random() > 0.5;
+            const startX = side ? -70 : window.innerWidth + 70;
+            const startY = Math.random() * (window.innerHeight * 0.8);
+            const moveX = side ? (window.innerWidth + 250) : -(window.innerWidth + 250);
+            const moveY = (Math.random() - 0.5) * 450;
+            bird.style.left = startX + 'px';
+            bird.style.top = startY + 'px';
+            bird.style.setProperty('--move-x', moveX + 'px');
+            bird.style.setProperty('--move-y', moveY + 'px');
+            if (!side) bird.style.transform = 'scaleX(-1)';
+            birdContainer.appendChild(bird);
+            setTimeout(() => bird.remove(), 8000);
+        }
+
+        let startY = 0;
+        document.addEventListener('touchstart', e => startY = e.touches[0].pageY);
+        document.addEventListener('touchend', e => {
+            let endY = e.changedTouches[0].pageY;
+            if(startY - endY > 60 && !slider.classList.contains('is-open')) openInv();
+            if(endY - startY > 60 && slider.classList.contains('is-open')) closeInv();
+        });
+    </script>
+</body>
+</html>
+
+```
